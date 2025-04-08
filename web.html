@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>ESP8266 Control Panel</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding-top: 100px;
+      background-color: #f5f5f5;
+    }
+    button {
+      font-size: 24px;
+      padding: 20px 40px;
+      margin: 20px;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+    }
+    .on { background-color: #4CAF50; color: white; }
+    .off { background-color: #f44336; color: white; }
+  </style>
+</head>
+<body>
+  <h1>ESP8266 LED Control</h1>
+  <button class="on" onclick="setState(true)">Turn ON</button>
+  <button class="off" onclick="setState(false)">Turn OFF</button>
+
+  <script>
+    const firebaseUrl = 'https://bank-9c0da-default-rtdb.firebaseio.com/accounts.json'; // Modify this
+    //const firebaseAuth = 'your_firebase_db_secret_or_token'; 
+    // Optional if public rules
+
+    function setState(state) {
+      fetch(firebaseUrl , {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ led
+: state })
+      })
+      .then(response => response.json())
+      .then(data => console.log("Success:", data))
+      .catch(error => console.error("Error:", error));
+    }
+  </script>
+</body>
+</html>
